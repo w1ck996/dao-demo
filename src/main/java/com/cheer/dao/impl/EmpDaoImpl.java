@@ -74,7 +74,7 @@ public class EmpDaoImpl implements EmpDao {
     }
 
     @Override
-    public void save(Emp emp) {
+    public void save(Emp emp) throws Exception {
         Connection connection = DBUtils.getInstance().getConnection();
         PreparedStatement statement = null;
         String sql = "insert into emp values(?, ?, ?, ?, ?, ?, ?, ?)";
@@ -98,11 +98,11 @@ public class EmpDaoImpl implements EmpDao {
         } finally {
             DBUtils.getInstance().close(connection, statement, null);
         }
-        System.out.println("新增失败！");
+        throw new Exception("新增失败");
     }
 
     @Override
-    public void remove(Integer empNo) {
+    public void remove(Integer empNo) throws Exception {
         Connection connection = DBUtils.getInstance().getConnection();
         PreparedStatement statement = null;
         String sql = "delete from emp where empno = ?";
@@ -119,11 +119,11 @@ public class EmpDaoImpl implements EmpDao {
         } finally {
             DBUtils.getInstance().close(connection, statement, null);
         }
-        System.out.println("删除失败！");
+        throw new Exception("删除失败");
     }
 
     @Override
-    public void update(Emp emp) {
+    public void update(Emp emp) throws Exception {
         Connection connection = DBUtils.getInstance().getConnection();
         PreparedStatement statement = null;
         String sql = "update emp set ename = ?, job =?, mgr = ?, hiredate = ?, sal = ?, com = ?, deptno = ? where " +
@@ -148,7 +148,7 @@ public class EmpDaoImpl implements EmpDao {
         } finally {
             DBUtils.getInstance().close(connection, statement, null);
         }
-        System.out.println("更新失败！");
+        throw new Exception("更新失败");
     }
 
     @Override
