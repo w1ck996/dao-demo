@@ -87,6 +87,7 @@ public class EmpDaoImpl implements EmpDao {
             statement.setString(5, emp.getHireDate());
             statement.setDouble(6, emp.getSal());
             statement.setDouble(7, emp.getCom());
+
             statement.setInt(8, emp.getDeptNo());
             int result = statement.executeUpdate();
             if (result == 1) {

@@ -5,19 +5,32 @@ import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
 
-// 数据库工具类
+/**
+ * 数据库工具类
+ * 1.获取实例
+ * 2.获取数据库连接
+ * 3.关闭数据库资源
+ */
 public class DBUtils {
     private static final DBUtils INSTANCE = new DBUtils();
 
     private DBUtils() {
     }
 
+    /**
+     * 获取实例
+     * @return
+     */
     public static DBUtils getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * 获取数据库连接
+     * @return
+     */
     public Connection getConnection() {
-        Properties properties = this.load();
+        Properties properties = this.load("/conf/jdbc.properties");
         String username = properties.getProperty("username");
         String password = properties.getProperty("password");
         String url = properties.getProperty("url");
@@ -26,6 +39,7 @@ public class DBUtils {
         System.out.printf("username=%s, password=%s, url=%s, driverClass=%s", username, password, url, driverClass);
 
         try {
+            // 加载数据库驱动
             Class.forName(driverClass);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -43,9 +57,14 @@ public class DBUtils {
         return connection;
     }
 
-    public Properties load() {
-        // 加载classpath下的文件
-        InputStream in = DBUtils.class.getResourceAsStream("/conf/jdbc.properties");
+    /**
+     * 加载classpath下的properties文件
+     * @param file
+     * @return
+     */
+    public Properties load(String file) {
+
+        InputStream in = DBUtils.class.getResourceAsStream(file);
 
         Properties properties = new Properties();
         try {
@@ -56,7 +75,12 @@ public class DBUtils {
 
         return properties;
     }
-
+    /**
+     * 关闭资源
+     * @param connection
+     * @param statement
+     * @param resultSet
+     */
     public void close(Connection connection, Statement statement, ResultSet resultSet) {
         try {
             if (resultSet != null) {

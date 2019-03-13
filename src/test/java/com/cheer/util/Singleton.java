@@ -1,7 +1,5 @@
 package com.cheer.util;
 
-import org.junit.Test;
-
 // 设计模式 单例模式 23种设计模式
 // 设计优点：在整个系统里有且仅有一个对象，可以做到节省资源，使用场景：数据库的连接等资源
 public class Singleton {
